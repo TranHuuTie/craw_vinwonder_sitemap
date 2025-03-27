@@ -45,7 +45,7 @@ crawl_task = SSHOperator(
     ssh_conn_id="tienth",  # Đổi thành SSH Connection ID đã cấu hình trong Airflow
     command="""  
     source /home/tiennh/venv/bin/activate && \
-    python /home/tiennh/airflow-docker-tienth/Craw_data_vinwonder_web/CRAW_NEW_URL.PY
+    python /home/tiennh/airflow-docker-tienth/Craw_data_vinwonder_web/DAG/CRAW_NEW_URL.PY
     """,
     conn_timeout=600,
     cmd_timeout=600,
@@ -75,5 +75,29 @@ upload_BQ = SSHOperator(
     cmd_timeout=600,
     dag=dag
 )
+
+regex_location_task = SSHOperator(
+    task_id="regex_location",
+    ssh_conn_id="tienth",  # Đổi thành SSH Connection ID đã cấu hình trong Airflow
+    command="""  
+    source /home/tiennh/venv/bin/activate && \
+    python /home/tiennh/airflow-docker-tienth/Craw_data_vinwonder_web/DAG/Regex_location.py
+    """,
+    conn_timeout=600,
+    cmd_timeout=600,
+    dag=dag
+)
+
+regex_zh_location_task = SSHOperator(
+    task_id="regex_zh_location",
+    ssh_conn_id="tienth",  # Đổi thành SSH Connection ID đã cấu hình trong Airflow
+    command="""  
+    source /home/tiennh/venv/bin/activate && \
+    python /home/tiennh/airflow-docker-tienth/Craw_data_vinwonder_web/DAG/regex_zh_location.py
+    """,
+    conn_timeout=600,
+    cmd_timeout=600,
+    dag=dag
+)
 # Xác định thứ tự thực hiện
-run_script >> crawl_task >> upload_BQ
+run_script >> crawl_task >> regex_location_task >> regex_zh_location_task >> upload_BQ

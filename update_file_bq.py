@@ -11,7 +11,7 @@ table_name = "vinwonder_news"  # Tên bảng trong BigQuery
 key_path = "/home/tiennh/airflow-docker-tienth/VP_CMS/bigquery_key.json"
 
 # Đường dẫn file .pkl cần upload
-pkl_file_path = "/home/tiennh/airflow-docker-tienth/Craw_data_vinwonder_web/Vinwonder_news_.pkl"
+pkl_file_path = "/home/tiennh/airflow-docker-tienth/Craw_data_vinwonder_web/Vinwonder_news_modified.pkl"
 
 try:
     # Load credentials từ service account key
